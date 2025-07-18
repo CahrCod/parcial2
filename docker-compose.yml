@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: parcial2-app
+    ports:
+      - "8088:8088"
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/parcial2
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=A03211026z_+*.
+    networks:
+      - parcial2-network
+    restart: always
+
+  mysql:
+    image: mysql:8.0
+    container_name: parcial2-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=parcial2
+      - MYSQL_ROOT_PASSWORD=A03211026z_+*.
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - parcial2-network
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+
+networks:
+  parcial2-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

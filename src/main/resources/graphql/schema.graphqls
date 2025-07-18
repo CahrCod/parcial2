@@ -1,0 +1,48 @@
+type Producto {
+    id: ID!
+    nombre: String!
+    descripcion: String
+    precio: Float!
+    categoria: String
+    inventarios: [Inventario]
+}
+
+type Almacen {
+    id: ID!
+    nombre: String!
+    direccion: String
+    inventarios: [Inventario]
+}
+
+type Inventario {
+    id: ID!
+    cantidad: Int!
+    producto: Producto!
+    almacen: Almacen!
+}
+
+type ProductoConCantidad {
+    producto: Producto!
+    cantidad: Int!
+}
+
+type Query {
+    getProductosYCantidadesPorAlmacen(almacenId: ID!): [ProductoConCantidad]
+    getProductos: [Producto]
+    getProducto(id: ID!): Producto
+    getAlmacenes: [Almacen]
+    getAlmacen(id: ID!): Almacen
+}
+
+type Mutation {
+    addProducto(
+        nombre: String!, 
+        descripcion: String, 
+        precio: Float!, 
+        categoria: String,
+        almacenId: ID, 
+        nombreAlmacen: String, 
+        direccionAlmacen: String,
+        cantidad: Int!
+    ): Producto
+}
